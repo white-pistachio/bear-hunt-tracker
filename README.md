@@ -223,13 +223,12 @@ The tracker works on:
 * Android browsers
 * iPhone and iPad browsers
 
-If opening directly from Discord or another messaging app doesn't work, download the HTML file first and then open it in your browser.
-
 ---
 
 # Why This Exists
 
 Bear Hunts generate a lot of information, but most alliances don't have a good way to track it over time.
 The goal of the Bear Hunt Tracker is to make leadership decisions easier by turning hunt data into useful insights.
-Reward contributors.
-Build stronger hunts.
+Reward contributors. Build stronger hunts.
+
+# [TDC]Elizabeth - 1273 
