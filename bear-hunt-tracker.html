@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bear Hunt Tracker</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --green: #15803d;
+      --red: #b42318;
+      --amber: #b54708;
+      --blue: #2563eb;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 10px 84px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 850;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 3px 0 0;
+    }
+
+    .hunt-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 10px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .hunt-card {
+      min-width: 210px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: #fff;
+      text-align: left;
+      scroll-snap-align: start;
+    }
+
+    .hunt-card.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    .hunt-card.active .muted,
+    .hunt-card.active .trend-text {
+      color: #d1d5db !important;
+    }
+
+    .hunt-date {
+      font-weight: 850;
+      font-size: 16px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .attendance-percent {
+      font-size: 28px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .hero-player {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .hero-player:first-child {
+      background: linear-gradient(180deg, #fff7ed, #ffffff);
+      border-color: #fed7aa;
+    }
+
+    .rank-badge {
+      min-width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 950;
+      background: #111827;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .mini-metric {
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 9px;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mini-value {
+      font-size: 16px;
+      font-weight: 850;
+      margin-top: 2px;
+    }
+
+    .insight-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 11px 12px;
+      background: #fff;
+    }
+
+    .stat-card {
+      min-height: 92px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .good {
+      color: var(--green);
+    }
+
+    .bad {
+      color: var(--red);
+    }
+
+    .gold {
+      color: var(--amber);
+    }
+
+    .blue {
+      color: var(--blue);
+    }
+
+    .change-up {
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .change-down {
+      color: var(--red);
+      font-weight: 850;
+    }
+
+    .change-flat {
+      color: var(--muted);
+      font-weight: 850;
+    }
+
+    .field-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .status-pill,
+    .row-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status-pill.joined {
+      background: #dcfce7;
+      color: var(--green);
+    }
+
+    .status-pill.missed {
+      background: #fee2e2;
+      color: var(--red);
+    }
+
+    .row-pill {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .front-warning td {
+      background: #fff7ed !important;
+    }
+
+    .table th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    .table input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #2563eb;
+    }
+
+    .table input,
+    .table select {
+      min-width: 92px;
+    }
+
+    .import-result-box {
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .bottom-actions {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      background: rgba(246, 247, 251, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      padding: 10px;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.open {
+      display: block;
+    }
+
+    .mobile-import-input {
+      font-size: 12px;
+    }
+
+    .desktop-actions {
+      display: none;
+    }
+
+
+    .performance-row {
+      align-items: stretch;
+    }
+
+    .performance-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .performance-column .app-card {
+      width: 100%;
+    }
+
+    .compact-strength-card {
+      flex: 0 0 auto;
+    }
+
+    .compact-strength-card .p-3 {
+      padding-bottom: 12px !important;
+    }
+
+    .compact-strength-card .section-subtitle {
+      margin-bottom: 10px;
+    }
+
+    .compact-strength-card .insight-card {
+      padding: 12px;
+    }
+
+    .compact-strength-card .row {
+      --bs-gutter-y: 0.65rem;
+    }
+
+    .compact-strength-card .mini-label {
+      font-size: 10px;
+    }
+
+    .compact-strength-card .mini-value {
+      font-size: 17px;
+      line-height: 1.15;
+    }
+
+    .hidden-card {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .hidden-card>.p-3 {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hidden-card #hiddenGemsList {
+      flex: 1 1 auto;
+    }
+
+    @media (min-width: 992px) {
+      .performance-row>[class*="col-"] {
+        display: flex;
+      }
+
+      .performance-row>[class*="col-"]>.app-card,
+      .performance-row>[class*="col-"]>.performance-column {
+        width: 100%;
+      }
+    }
+
+
+    @media (min-width: 768px) {
+      .app {
+        padding: 28px 16px 40px;
+      }
+
+      .bottom-actions {
+        display: none;
+      }
+
+      .desktop-actions {
+        display: flex;
+      }
+
+      .stat-card {
+        min-height: 112px;
+      }
+
+      .stat-value {
+        font-size: 30px;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="mb-3">
+      <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+        <div>
+          <h1 class="fw-bold mb-1">🐻 Bear Hunt Tracker</h1>
+        </div>
+
+        <div class="desktop-actions gap-2">
+          <label class="btn btn-outline-dark mb-0">
+            Import
+            <input type="file" accept=".json,application/json" multiple class="d-none js-import-file" />
+          </label>
+          <button class="btn btn-outline-dark" type="button" data-action="export-selected">Export Hunt</button>
+          <button class="btn btn-dark" type="button" data-action="export-all">Export All</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="importResult" class="import-result-box mb-3 d-none"></div>
+
+    <section id="allHuntsPanel" class="app-card mb-3 panel">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+          <div>
+            <h2 class="section-title">All Hunts</h2>
+            <p class="section-subtitle">Select any saved hunt.</p>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-action="hide-all-hunts">Close</button>
+        </div>
+
+        <div id="allHuntsList" class="d-grid gap-2"></div>
+
+        <div class="mt-3">
+          <button class="btn btn-outline-danger" type="button" data-action="delete-hunt">Delete Selected</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="createHuntPanel" class="app-card mb-3 panel">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+          <div>
+            <h2 class="section-title">Create New Hunt</h2>
+            <p class="section-subtitle">Choose a date first. Today is not created automatically.</p>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-action="hide-create">Close</button>
+        </div>
+
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-md-4">
+            <label class="field-label" for="newHuntDate">Hunt Date</label>
+            <input class="form-control" type="date" id="newHuntDate" />
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="copyRosterCheck" checked>
+              <label class="form-check-label" for="copyRosterCheck">
+                Copy roster from selected hunt
+              </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <button class="btn btn-dark w-100" type="button" data-action="confirm-create">Create Hunt</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <h2 class="section-title">Recent Hunts</h2>
+            <p class="section-subtitle">Last 3 hunts for weekly comparison</p>
+          </div>
+          <button class="btn btn-sm btn-outline-dark" type="button" data-action="show-all-hunts">
+            View All
+          </button>
+        </div>
+
+        <div id="recentHuntStrip" class="hunt-strip"></div>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+          <div>
+            <h2 class="section-title">Top Contributors</h2>
+            <p class="section-subtitle">Attendance + average hunt damage from the last 3 hunts</p>
+          </div>
+        </div>
+
+        <div id="topPlayersList" class="d-grid gap-2"></div>
+      </div>
+    </section>
+
+    <section class="row g-3 mb-3 performance-row">
+      <div class="col-12 col-lg-6">
+        <section class="app-card">
+          <div class="p-3">
+            <h2 class="section-title">Front Row Watch List</h2>
+            <p class="section-subtitle mb-3">Running tally of expected Front Row players who missed hunts.</p>
+            <div id="watchList" class="d-grid gap-2"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12 col-lg-6 d-flex">
+        <div class="performance-column w-100">
+          <section class="app-card compact-strength-card">
+            <div class="p-3">
+              <h2 class="section-title">Hunt Strength</h2>
+              <p class="section-subtitle">Median and average damage of players who joined the selected hunt.</p>
+              <div id="huntStrengthList" class="d-grid gap-2"></div>
+            </div>
+          </section>
+
+          <section class="app-card hidden-card">
+            <div class="p-3">
+              <h2 class="section-title">Hidden Gems</h2>
+              <p class="section-subtitle mb-3">Current Second/Third Row players performing near or above Front Row
+                median damage.</p>
+              <div id="hiddenGemsList" class="d-grid gap-2"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <h2 class="section-title">Damage Trend</h2>
+        <p class="section-subtitle mb-3">Shows player damage increase or decrease between their most recent joined
+          hunts.</p>
+        <div id="damageTrendList" class="d-grid gap-2"></div>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-end mb-3">
+          <div>
+            <div class="text-secondary small fw-bold text-uppercase">Current Hunt</div>
+            <h2 class="fw-bold mb-0" id="selectedHuntTitle">No hunt selected</h2>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="field-label" for="huntDate">Hunt Date</label>
+            <input class="form-control" type="date" id="huntDate" data-field="hunt-date" />
+          </div>
+        </div>
+
+        <section class="row g-2 g-md-3">
+          <div class="col-6 col-xl-3">
+            <div class="app-card stat-card shadow-none">
+              <div class="p-3">
+                <div class="stat-label">Expected</div>
+                <div class="stat-value" id="expectedCount">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-xl-3">
+            <div class="app-card stat-card shadow-none">
+              <div class="p-3">
+                <div class="stat-label">Joined</div>
+                <div class="stat-value good" id="joinedCount">0</div>
+                <div class="muted" id="joinedDetail">Includes other joins</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-xl-3">
+            <div class="app-card stat-card shadow-none">
+              <div class="p-3">
+                <div class="stat-label">Missed</div>
+                <div class="stat-value bad" id="missedCount">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-xl-3">
+            <div class="app-card stat-card shadow-none">
+              <div class="p-3">
+                <div class="stat-label">Front Row</div>
+                <div class="stat-value gold" id="frontRowCount">0 / 0</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+          <div>
+            <h2 class="section-title">Attendance & Damage</h2>
+            <p class="section-subtitle">Working area for the selected hunt</p>
+          </div>
+          <button class="btn btn-dark" data-action="add-player">+ Player</button>
+        </div>
+
+        <div class="table-responsive border rounded-4">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Player</th>
+                <th>Row</th>
+                <th>Expected</th>
+                <th>Joined</th>
+                <th>Rank</th>
+                <th>Damage</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="playerTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <h2 class="section-title">Notes</h2>
+        <p class="section-subtitle mb-3">Strategy, rally issues, and context for the selected hunt</p>
+
+        <textarea class="form-control" id="huntNotes"
+          placeholder="Example: Only 6 rallies started. Tested topper-down method. Damage improved but rallies did not fill evenly."
+          data-field="hunt-notes"></textarea>
+      </div>
+    </section>
+
+    <section class="app-card mb-3">
+      <div class="p-3">
+        <h2 class="section-title mb-1">Player History</h2>
+        <p class="section-subtitle mb-3">Joined = expected and joined. BT1/Other = not expected but joined.</p>
+
+        <div class="table-responsive border rounded-4">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Player</th>
+                <th>Row</th>
+                <th>Joined</th>
+                <th>BT1/Other</th>
+                <th>Missed</th>
+                <th>Attendance</th>
+                <th>Best Damage</th>
+                <th>Average Damage</th>
+              </tr>
+            </thead>
+            <tbody id="historyTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-actions">
+    <div class="row g-2 mb-2">
+      <div class="col-12">
+        <input class="form-control mobile-import-input js-import-file" type="file" accept=".json,application/json"
+          multiple />
+      </div>
+    </div>
+
+    <div class="row g-2">
+      <div class="col-4">
+        <button class="btn btn-outline-dark w-100" type="button" data-action="export-selected">Export</button>
+      </div>
+      <div class="col-4">
+        <button class="btn btn-outline-dark w-100" type="button" data-action="export-all">All</button>
+      </div>
+      <div class="col-4">
+        <button class="btn btn-dark w-100" type="button" data-action="show-create">+ Hunt</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', initApp);
+
+    function initApp() {
+      window.today = getLocalDateString();
+      window.storageKey = 'bearHuntTracker';
+      window.data = normaliseData(loadJson(storageKey, []));
+      window.selectedHuntId = null;
+
+      sortHunts();
+      selectedHuntId = data[0]?.id || null;
+
+      bindEvents();
+      render();
+    }
+
+    function bindEvents() {
+      document.addEventListener('click', handleClick);
+      document.addEventListener('change', handleChange);
+      document.addEventListener('input', handleInput);
+    }
+
+    function handleClick(event) {
+      const actionEl = event.target.closest('[data-action]');
+      if (!actionEl) return;
+
+      const action = actionEl.dataset.action;
+      const index = actionEl.dataset.index;
+      const huntId = actionEl.dataset.huntId;
+
+      if (action === 'show-all-hunts') toggleAllHunts(true);
+      if (action === 'hide-all-hunts') toggleAllHunts(false);
+      if (action === 'show-create') toggleCreatePanel(true);
+      if (action === 'hide-create') toggleCreatePanel(false);
+      if (action === 'confirm-create') confirmCreateHunt();
+      if (action === 'export-selected') exportSelectedHunt();
+      if (action === 'export-all') exportAllData();
+      if (action === 'delete-hunt') deleteCurrentHunt();
+      if (action === 'add-player') addPlayerRow();
+      if (action === 'select-hunt') selectHunt(huntId);
+      if (action === 'delete-player') deletePlayer(Number(index));
+    }
+
+    function handleChange(event) {
+      if (event.target.classList.contains('js-import-file')) {
+        importData(event);
+        return;
+      }
+
+      const field = event.target.dataset.field;
+      const index = event.target.dataset.index;
+
+      if (field === 'hunt-date') updateCurrentHuntDate(event.target.value);
+      if (field && index !== undefined) updatePlayer(Number(index), field, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    }
+
+    function handleInput(event) {
+      const field = event.target.dataset.field;
+      const index = event.target.dataset.index;
+
+      if (field === 'hunt-notes') updateTrapNotes();
+      if (field && index !== undefined && (field === 'name' || field === 'rank' || field === 'damage')) {
+        updatePlayer(Number(index), field, event.target.value);
+      }
+    }
+
+    function getLocalDateString(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function loadJson(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function makeId() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return `hunt-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function sortHunts() {
+      data.sort((a, b) => new Date(b.date + 'T00:00:00') - new Date(a.date + 'T00:00:00'));
+    }
+
+    function normaliseData(hunts) {
+      if (!Array.isArray(hunts)) return [];
+      const bestByDate = {};
+
+      hunts.forEach(hunt => {
+        const normalised = normaliseHunt(hunt);
+        const existing = bestByDate[normalised.date];
+
+        if (!existing || huntScore(normalised) > huntScore(existing)) {
+          bestByDate[normalised.date] = normalised;
+        }
+      });
+
+      return Object.values(bestByDate);
+    }
+
+    function normaliseHunt(hunt) {
+      return {
+        id: hunt.id || makeId(),
+        name: hunt.name || 'Bear Hunt',
+        date: normaliseDate(hunt.date || hunt.huntDate || hunt.selectedHuntDate),
+        notes: hunt.notes || hunt.huntNotes || '',
+        players: normalisePlayers(hunt.players || hunt.roster || hunt.attendance || [])
+      };
+    }
+
+    function normalisePlayers(players) {
+      if (!Array.isArray(players)) return [];
+
+      return players.map(player => ({
+        name: player.name || player.player || player.playerName || '',
+        row: player.row || player.position || 'Front Row',
+        expected: player.expected !== undefined ? Boolean(player.expected) : true,
+        joined: Boolean(player.joined),
+        rank: player.rank ?? '',
+        damage: Number(player.damage) || 0
+      }));
+    }
+
+    function huntScore(hunt) {
+      const players = hunt.players || [];
+      const joined = players.filter(p => p.joined).length;
+      const damage = players.reduce((total, p) => total + (Number(p.damage) || 0), 0);
+      return players.length * 1000000000 + joined * 1000000 + damage;
+    }
+
+    function extractHuntsFromImport(imported) {
+      if (Array.isArray(imported)) return imported;
+      if (Array.isArray(imported.hunts)) return imported.hunts;
+      if (Array.isArray(imported.data)) return imported.data;
+      if (Array.isArray(imported.bearHunts)) return imported.bearHunts;
+
+      if (imported.date || imported.huntDate || imported.players || imported.roster || imported.attendance) {
+        return [imported];
+      }
+
+      return [];
+    }
+
+    function normaliseDate(value) {
+      if (!value) return today;
+
+      const raw = String(value).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+
+      const slashMatch = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (slashMatch) {
+        const day = slashMatch[1].padStart(2, '0');
+        const month = slashMatch[2].padStart(2, '0');
+        const year = slashMatch[3];
+        return `${year}-${month}-${day}`;
+      }
+
+      const parsed = new Date(raw);
+      if (!Number.isNaN(parsed.getTime())) return getLocalDateString(parsed);
+
+      return today;
+    }
+
+    function currentHunt() {
+      const found = data.find(hunt => hunt.id === selectedHuntId);
+      if (found) return found;
+
+      selectedHuntId = data[0]?.id || null;
+      return data[0] || null;
+    }
+
+    function selectHunt(id) {
+      selectedHuntId = id;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function attendanceStats(hunt) {
+      const players = hunt?.players || [];
+      const expected = players.filter(p => p.expected).length;
+
+      const joined = players.filter(p => p.joined).length;
+
+      const expectedJoined = players.filter(p => p.expected && p.joined).length;
+      const otherJoined = players.filter(p => !p.expected && p.joined).length;
+      const missed = players.filter(p => p.expected && !p.joined).length;
+
+      const percent = expected ? Math.round((joined / expected) * 100) : 0;
+
+      const frontExpected = players.filter(p => p.expected && p.row === 'Front Row').length;
+      const frontJoined = players.filter(p => p.joined && p.row === 'Front Row').length;
+
+      return { players, expected, joined, expectedJoined, otherJoined, missed, percent, frontExpected, frontJoined };
+    }
+
+    function formatNumber(value) {
+      return (Number(value) || 0).toLocaleString();
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return 'No date';
+      const date = new Date(dateString + 'T00:00:00');
+      return date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function downloadJson(fileName, object) {
+      const blob = new Blob([JSON.stringify(object, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function toggleCreatePanel(open) {
+      const panel = document.getElementById('createHuntPanel');
+      panel.classList.toggle('open', open);
+
+      if (open) {
+        document.getElementById('newHuntDate').value = '';
+        document.getElementById('copyRosterCheck').checked = true;
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function toggleAllHunts(open) {
+      const panel = document.getElementById('allHuntsPanel');
+      panel.classList.toggle('open', open);
+      if (open) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderRecentHunts() {
+      const strip = document.getElementById('recentHuntStrip');
+      strip.innerHTML = '';
+
+      if (!data.length) {
+        strip.innerHTML = `<div class="text-secondary small">No hunts yet. Use the file picker below to import data, or tap + Hunt.</div>`;
+        return;
+      }
+
+      data.slice(0, 3).forEach((hunt, index) => {
+        const stats = attendanceStats(hunt);
+        const previous = data[index + 1] ? attendanceStats(data[index + 1]) : null;
+        const diff = previous ? stats.percent - previous.percent : null;
+        const trend = diff === null ? '' : diff > 0 ? `▲ ${diff}%` : diff < 0 ? `▼ ${Math.abs(diff)}%` : 'No change';
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `hunt-card ${hunt.id === selectedHuntId ? 'active' : ''}`;
+        button.dataset.action = 'select-hunt';
+        button.dataset.huntId = hunt.id;
+
+        button.innerHTML = `
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="hunt-date">${formatDate(hunt.date)}</div>
+              <div class="muted">${stats.joined} / ${stats.expected} joined</div>
+            </div>
+            <div class="attendance-percent">${stats.percent}%</div>
+          </div>
+          <div class="trend-text muted mt-2">${trend}</div>
+        `;
+
+        strip.appendChild(button);
+      });
+    }
+
+    function renderAllHunts() {
+      const list = document.getElementById('allHuntsList');
+      list.innerHTML = '';
+
+      if (!data.length) {
+        list.innerHTML = `<div class="text-secondary small">No hunts yet.</div>`;
+        return;
+      }
+
+      data.forEach(hunt => {
+        const stats = attendanceStats(hunt);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `hunt-card ${hunt.id === selectedHuntId ? 'active' : ''}`;
+        button.dataset.action = 'select-hunt';
+        button.dataset.huntId = hunt.id;
+
+        button.innerHTML = `
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="hunt-date">${formatDate(hunt.date)}</div>
+              <div class="muted">${stats.joined} joined / ${stats.expected} expected</div>
+            </div>
+            <div class="attendance-percent">${stats.percent}%</div>
+          </div>
+        `;
+
+        list.appendChild(button);
+      });
+    }
+
+    function renderTopPlayers() {
+      const list = document.getElementById('topPlayersList');
+      const recentHunts = data.slice(0, 3);
+      const history = {};
+
+      recentHunts.forEach(hunt => {
+        hunt.players.forEach(player => {
+          if (!player.name || !player.expected) return;
+
+          if (!history[player.name]) {
+            history[player.name] = {
+              name: player.name,
+              row: player.row,
+              expected: 0,
+              joined: 0,
+              scores: []
+            };
+          }
+
+          history[player.name].expected += 1;
+
+          if (player.joined) {
+            history[player.name].joined += 1;
+            const damage = Number(player.damage) || 0;
+            if (damage) history[player.name].scores.push(damage);
+          }
+        });
+      });
+
+      const players = Object.values(history).map(player => {
+        const totalDamage = player.scores.reduce((sum, score) => sum + score, 0);
+        const averageDamage = player.scores.length ? Math.round(totalDamage / player.scores.length) : 0;
+        const attendancePercent = player.expected ? Math.round((player.joined / player.expected) * 100) : 0;
+
+        return {
+          name: player.name,
+          row: player.row,
+          expected: player.expected,
+          joined: player.joined,
+          attendancePercent,
+          averageDamage,
+          best: player.scores.length ? Math.max(...player.scores) : 0,
+          score: 0
+        };
+      }).filter(player => player.averageDamage > 0 || player.joined > 0);
+
+      if (!players.length) {
+        list.innerHTML = `<div class="text-secondary small">No attendance or damage scores recorded yet.</div>`;
+        return;
+      }
+
+      const maxAverageDamage = Math.max(...players.map(player => player.averageDamage), 1);
+
+      players.forEach(player => {
+        const damageScore = (player.averageDamage / maxAverageDamage) * 100;
+        const attendanceScore = player.attendancePercent;
+        player.score = Math.round((attendanceScore * 0.5) + (damageScore * 0.5));
+      });
+
+      const rows = players
+        .sort((a, b) => b.score - a.score || b.averageDamage - a.averageDamage || b.attendancePercent - a.attendancePercent)
+        .slice(0, 5);
+
+      const medals = ['🥇', '🥈', '🥉', '4', '5'];
+
+      list.innerHTML = rows.map((player, index) => `
+        <div class="hero-player">
+          <div class="d-flex align-items-start justify-content-between gap-2">
+            <div class="d-flex gap-2 align-items-start">
+              <span class="rank-badge">${medals[index]}</span>
+              <div>
+                <strong>${escapeHtml(player.name)}</strong>
+                <div class="text-secondary small">${escapeHtml(player.row)} · ${player.joined}/${player.expected} hunts joined</div>
+              </div>
+            </div>
+            <div class="text-end">
+              <div class="fw-bold">${player.attendancePercent}%</div>
+              <div class="text-secondary small">attendance</div>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="mini-metric">
+              <div class="mini-label">Avg damage</div>
+              <div class="mini-value">${formatNumber(player.averageDamage)}</div>
+            </div>
+            <div class="mini-metric">
+              <div class="mini-label">Best</div>
+              <div class="mini-value">${formatNumber(player.best)}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getPlayerDamageHistory() {
+      const history = {};
+
+      data
+        .slice()
+        .sort((a, b) => new Date(a.date + 'T00:00:00') - new Date(b.date + 'T00:00:00'))
+        .forEach(hunt => {
+          hunt.players.forEach(player => {
+            if (!player.name || !player.joined) return;
+
+            const damage = Number(player.damage) || 0;
+            if (!damage) return;
+
+            if (!history[player.name]) {
+              history[player.name] = { name: player.name, row: player.row, scores: [] };
+            }
+
+            history[player.name].row = player.row;
+            history[player.name].scores.push({ date: hunt.date, damage });
+          });
+        });
+
+      return history;
+    }
+
+    function renderDamageTrend() {
+      const list = document.getElementById('damageTrendList');
+      const history = getPlayerDamageHistory();
+
+      const rows = Object.values(history)
+        .map(player => {
+          const scores = player.scores;
+          const last = scores[scores.length - 1];
+          const previous = scores[scores.length - 2];
+
+          if (!last || !previous) return null;
+
+          const change = last.damage - previous.damage;
+          const percent = previous.damage ? Math.round((change / previous.damage) * 100) : 0;
+
+          return {
+            name: player.name,
+            lastDamage: last.damage,
+            previousDamage: previous.damage,
+            change,
+            percent
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => Math.abs(b.change) - Math.abs(a.change))
+        .slice(0, 6);
+
+      if (!rows.length) {
+        list.innerHTML = `<div class="text-secondary small">Need at least two joined hunts with damage to show trends.</div>`;
+        return;
+      }
+
+      list.innerHTML = rows.map(item => {
+        const changeClass = item.change > 0 ? 'change-up' : item.change < 0 ? 'change-down' : 'change-flat';
+        const arrow = item.change > 0 ? '▲' : item.change < 0 ? '▼' : '—';
+        const sign = item.change > 0 ? '+' : '';
+
+        return `
+          <div class="insight-card">
+            <div class="d-flex justify-content-between gap-2">
+              <strong>${escapeHtml(item.name)}</strong>
+              <span class="${changeClass}">${arrow} ${sign}${item.percent}%</span>
+            </div>
+            <div class="text-secondary small">
+              Last: ${formatNumber(item.lastDamage)} · Previous: ${formatNumber(item.previousDamage)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function median(values) {
+      const nums = values
+        .map(value => Number(value) || 0)
+        .filter(value => value > 0)
+        .sort((a, b) => a - b);
+
+      if (!nums.length) return 0;
+
+      const middle = Math.floor(nums.length / 2);
+
+      if (nums.length % 2) return nums[middle];
+
+      return Math.round((nums[middle - 1] + nums[middle]) / 2);
+    }
+
+    function average(values) {
+      const nums = values
+        .map(value => Number(value) || 0)
+        .filter(value => value > 0);
+
+      if (!nums.length) return 0;
+
+      return Math.round(nums.reduce((sum, value) => sum + value, 0) / nums.length);
+    }
+
+    function renderHuntStrength() {
+      const list = document.getElementById('huntStrengthList');
+      if (!list) return;
+
+      const hunt = currentHunt();
+
+      if (!hunt) {
+        list.innerHTML = `<div class="text-secondary small">Create or import a hunt to see hunt strength.</div>`;
+        return;
+      }
+
+      const joinedWithDamage = hunt.players
+        .filter(player => player.joined && Number(player.damage) > 0);
+
+      const damages = joinedWithDamage.map(player => Number(player.damage) || 0);
+      const joinedCount = hunt.players.filter(player => player.joined).length;
+      const totalDamage = damages.reduce((sum, value) => sum + value, 0);
+      const medianDamage = median(damages);
+      const averageDamage = average(damages);
+
+      if (!joinedWithDamage.length) {
+        list.innerHTML = `<div class="text-secondary small">Enter damage for joined players to calculate hunt strength.</div>`;
+        return;
+      }
+
+      list.innerHTML = `
+        <div class="insight-card">
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="mini-label">Median Damage</div>
+              <div class="mini-value">${formatNumber(medianDamage)}</div>
+            </div>
+            <div class="col-6">
+              <div class="mini-label">Average Damage</div>
+              <div class="mini-value">${formatNumber(averageDamage)}</div>
+            </div>
+            <div class="col-6">
+              <div class="mini-label">Total Damage</div>
+              <div class="mini-value">${formatNumber(totalDamage)}</div>
+            </div>
+            <div class="col-6">
+              <div class="mini-label">Joined Players</div>
+              <div class="mini-value">${joinedCount}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderHiddenGems() {
+      const list = document.getElementById('hiddenGemsList');
+      if (!list) return;
+
+      const recentHunts = data.slice(0, 3);
+      const playerHistory = {};
+      const frontRowDamages = [];
+
+      recentHunts.forEach(hunt => {
+        hunt.players.forEach(player => {
+          if (!player.name) return;
+
+          const damage = Number(player.damage) || 0;
+
+          if (!playerHistory[player.name]) {
+            playerHistory[player.name] = {
+              name: player.name,
+              currentRow: player.row,
+              bestRow: player.row,
+              wasFrontRow: false,
+              expected: 0,
+              joined: 0,
+              missed: 0,
+              scores: []
+            };
+          }
+
+          if (!playerHistory[player.name].currentRow) {
+            playerHistory[player.name].currentRow = player.row;
+          }
+
+          if (player.row === 'Front Row') {
+            playerHistory[player.name].wasFrontRow = true;
+            playerHistory[player.name].bestRow = 'Front Row';
+          } else if (player.row === 'Second Row' && playerHistory[player.name].bestRow !== 'Front Row') {
+            playerHistory[player.name].bestRow = 'Second Row';
+          } else if (!playerHistory[player.name].bestRow) {
+            playerHistory[player.name].bestRow = player.row;
+          }
+
+          if (player.expected) {
+            playerHistory[player.name].expected += 1;
+
+            if (player.joined) {
+              playerHistory[player.name].joined += 1;
+            } else {
+              playerHistory[player.name].missed += 1;
+            }
+          }
+
+          if (player.joined && damage > 0) {
+            if (player.row === 'Front Row') {
+              frontRowDamages.push(damage);
+            }
+
+            playerHistory[player.name].scores.push(damage);
+          }
+        });
+      });
+
+      const frontMedian = median(frontRowDamages);
+
+      const rows = Object.values(playerHistory)
+        .map(player => {
+          const avg = average(player.scores);
+          const med = median(player.scores);
+          const attendance = player.expected
+            ? Math.round((player.joined / player.expected) * 100)
+            : 0;
+          const percentVsFrontMedian = frontMedian
+            ? Math.round(((avg - frontMedian) / frontMedian) * 100)
+            : 0;
+
+          return {
+            name: player.name,
+            row: player.currentRow,
+            bestRow: player.bestRow,
+            wasFrontRow: player.wasFrontRow,
+            expected: player.expected,
+            joined: player.joined,
+            missed: player.missed,
+            attendance,
+            averageDamage: avg,
+            medianDamage: med,
+            percentVsFrontMedian
+          };
+        })
+        .filter(player =>
+          (player.row === 'Second Row' || player.row === 'Third Row') &&
+          player.averageDamage > 0 &&
+          (
+            !frontMedian ||
+            player.averageDamage >= frontMedian * 0.9
+          )
+        )
+        .sort((a, b) => {
+          if (b.percentVsFrontMedian !== a.percentVsFrontMedian) {
+            return b.percentVsFrontMedian - a.percentVsFrontMedian;
+          }
+
+          return b.averageDamage - a.averageDamage;
+        })
+        .slice(0, 5);
+
+      if (!rows.length) {
+        list.innerHTML = `<div class="text-secondary small">No hidden candidates yet. Add damage for Second/Third Row players and Front Row players to compare.</div>`;
+        return;
+      }
+
+      list.innerHTML = rows.map(player => {
+        const comparison = frontMedian
+          ? player.percentVsFrontMedian >= 0
+            ? `<span class="good fw-bold">+${player.percentVsFrontMedian}% vs Front Row median</span>`
+            : `<span class="gold fw-bold">${player.percentVsFrontMedian}% vs Front Row median</span>`
+          : `<span class="text-secondary">Need Front Row damage to compare</span>`;
+
+        const previousContext = player.wasFrontRow
+          ? `Previously Front Row`
+          : `Best row: ${escapeHtml(player.bestRow || player.row)}`;
+
+        return `
+          <div class="insight-card">
+            <div class="d-flex justify-content-between gap-2">
+              <strong>${escapeHtml(player.name)}</strong>
+              <span class="row-pill">${escapeHtml(player.row)}</span>
+            </div>
+            <div class="text-secondary small">
+              ${previousContext} · ${player.attendance}% attendance · ${player.joined}/${player.expected || 0} expected joined
+            </div>
+            <div class="text-secondary small">
+              Avg: ${formatNumber(player.averageDamage)} · Median: ${formatNumber(player.medianDamage)}
+            </div>
+            <div class="small mt-1">${comparison}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderWatchList() {
+      const list = document.getElementById('watchList');
+      const summary = {};
+
+      data.forEach(hunt => {
+        hunt.players.forEach(player => {
+          if (!player.expected || !player.name || player.row !== 'Front Row') return;
+
+          if (!summary[player.name]) {
+            summary[player.name] = {
+              missed: 0,
+              expected: 0,
+              joined: 0,
+              row: player.row,
+              lastMissedDate: null
+            };
+          }
+
+          summary[player.name].expected += 1;
+
+          if (player.joined) {
+            summary[player.name].joined += 1;
+          } else {
+            summary[player.name].missed += 1;
+
+            if (!summary[player.name].lastMissedDate || hunt.date > summary[player.name].lastMissedDate) {
+              summary[player.name].lastMissedDate = hunt.date;
+            }
+          }
+        });
+      });
+
+      const rows = Object.entries(summary)
+        .filter(([_, item]) => item.missed > 0)
+        .sort((a, b) => {
+          if (b[1].missed !== a[1].missed) return b[1].missed - a[1].missed;
+          return (b[1].lastMissedDate || '').localeCompare(a[1].lastMissedDate || '');
+        })
+        .slice(0, 10);
+
+      if (!rows.length) {
+        list.innerHTML = `<div class="text-secondary small">No missed expected Front Row hunts recorded.</div>`;
+        return;
+      }
+
+      list.innerHTML = rows.map(([name, item]) => {
+        const attendance = item.expected ? Math.round((item.joined / item.expected) * 100) : 0;
+        const lastMissed = item.lastMissedDate ? formatDate(item.lastMissedDate) : 'Unknown';
+
+        return `
+          <div class="insight-card">
+            <div class="d-flex justify-content-between gap-2">
+              <strong>${escapeHtml(name)}</strong>
+              <span class="bad fw-bold">${item.missed} missed</span>
+            </div>
+            <div class="text-secondary small">
+              ${item.joined} joined / ${item.expected} expected · ${attendance}% attendance
+            </div>
+            <div class="text-secondary small">
+              Last missed: ${lastMissed} · Front Row
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderHuntEditor() {
+      const hunt = currentHunt();
+      document.getElementById('huntDate').value = hunt?.date || '';
+      document.getElementById('selectedHuntTitle').textContent = hunt ? formatDate(hunt.date) : 'No hunt selected';
+    }
+
+    function renderSummary() {
+      const stats = attendanceStats(currentHunt());
+
+      document.getElementById('expectedCount').textContent = stats.expected;
+      document.getElementById('joinedCount').textContent = stats.joined;
+      document.getElementById('missedCount').textContent = stats.missed;
+      document.getElementById('frontRowCount').textContent = `${stats.frontJoined} / ${stats.frontExpected}`;
+
+      const joinedDetail = document.getElementById('joinedDetail');
+      if (joinedDetail) {
+        joinedDetail.textContent = stats.otherJoined
+          ? `${stats.expectedJoined} expected + ${stats.otherJoined} other`
+          : 'Expected joins only';
+      }
+    }
+
+    function renderNotes() {
+      document.getElementById('huntNotes').value = currentHunt()?.notes || '';
+    }
+
+    function showImportResult(result) {
+      const box = document.getElementById('importResult');
+      box.classList.remove('d-none');
+
+      box.innerHTML = `
+        <div class="fw-bold mb-2">Import Complete</div>
+        <div class="row g-2">
+          <div class="col-6 col-md-3"><span class="text-secondary">Files:</span> <strong>${result.files}</strong></div>
+          <div class="col-6 col-md-3"><span class="text-secondary">Added:</span> <strong class="good">${result.added}</strong></div>
+          <div class="col-6 col-md-3"><span class="text-secondary">Updated:</span> <strong class="gold">${result.updated}</strong></div>
+          <div class="col-6 col-md-3"><span class="text-secondary">Failed:</span> <strong class="bad">${result.failed}</strong></div>
+        </div>
+        <div class="small text-secondary mt-2">${result.dates.length ? `Imported hunts: ${escapeHtml(result.dates.join(', '))}` : ''}</div>
+      `;
+    }
+
+    function renderPlayers() {
+      const table = document.getElementById('playerTable');
+      const hunt = currentHunt();
+      table.innerHTML = '';
+
+      if (!hunt || !hunt.players.length) {
+        table.innerHTML = `<tr><td colspan="8" class="text-secondary">No players added for this hunt yet.</td></tr>`;
+        return;
+      }
+
+      hunt.players.forEach((player, index) => {
+        const tr = document.createElement('tr');
+        if (player.row === 'Front Row' && player.expected && !player.joined) tr.classList.add('front-warning');
+
+        tr.innerHTML = `
+          <td><input class="form-control form-control-sm" value="${escapeHtml(player.name)}" data-index="${index}" data-field="name" /></td>
+          <td>
+            <select class="form-select form-select-sm" data-index="${index}" data-field="row">
+              ${['Front Row', 'Second Row', 'Third Row', 'Other'].map(row => `<option ${player.row === row ? 'selected' : ''}>${row}</option>`).join('')}
+            </select>
+          </td>
+          <td class="text-center"><input type="checkbox" ${player.expected ? 'checked' : ''} data-index="${index}" data-field="expected" /></td>
+          <td class="text-center"><input type="checkbox" ${player.joined ? 'checked' : ''} data-index="${index}" data-field="joined" /></td>
+          <td><input class="form-control form-control-sm" type="number" value="${player.rank || ''}" data-index="${index}" data-field="rank" /></td>
+          <td><input class="form-control form-control-sm" type="number" value="${player.damage || 0}" data-index="${index}" data-field="damage" /></td>
+          <td>${player.joined ? '<span class="status-pill joined">Joined</span>' : '<span class="status-pill missed">Missed</span>'}</td>
+          <td><button class="btn btn-sm btn-outline-danger" type="button" data-action="delete-player" data-index="${index}">Delete</button></td>
+        `;
+
+        table.appendChild(tr);
+      });
+    }
+
+    function renderHistory() {
+      const summary = {};
+
+      data.forEach(hunt => {
+        hunt.players.forEach(player => {
+          if (!player.name) return;
+
+          if (!summary[player.name]) {
+            summary[player.name] = { row: player.row, joined: 0, otherJoined: 0, missed: 0, scores: [] };
+          }
+
+          if (player.expected && player.joined) {
+            summary[player.name].joined += 1;
+            summary[player.name].scores.push(Number(player.damage) || 0);
+          }
+
+          if (!player.expected && player.joined) {
+            summary[player.name].otherJoined += 1;
+            summary[player.name].scores.push(Number(player.damage) || 0);
+          }
+
+          if (player.expected && !player.joined) summary[player.name].missed += 1;
+        });
+      });
+
+      const rows = Object.entries(summary).sort((a, b) => (b[1].joined - a[1].joined) || a[0].localeCompare(b[0]));
+
+      if (!rows.length) {
+        document.getElementById('historyTable').innerHTML = `<tr><td colspan="8" class="text-secondary">No player history yet.</td></tr>`;
+        return;
+      }
+
+      document.getElementById('historyTable').innerHTML = rows.map(([name, item]) => {
+        const total = item.joined + item.missed;
+        const attendance = total ? Math.round((item.joined / total) * 100) : 0;
+        const best = item.scores.length ? Math.max(...item.scores) : 0;
+        const avg = item.scores.length ? Math.round(item.scores.reduce((a, b) => a + b, 0) / item.scores.length) : 0;
+
+        return `
+          <tr>
+            <td>${escapeHtml(name)}</td>
+            <td><span class="row-pill">${escapeHtml(item.row)}</span></td>
+            <td class="good fw-bold">${item.joined}</td>
+            <td class="blue fw-bold">${item.otherJoined || 0}</td>
+            <td class="bad fw-bold">${item.missed}</td>
+            <td class="${attendance >= 80 ? 'good' : attendance >= 50 ? 'gold' : 'bad'} fw-bold">${attendance}%</td>
+            <td>${formatNumber(best)}</td>
+            <td>${formatNumber(avg)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateCurrentHuntDate(value) {
+      const hunt = currentHunt();
+      if (!hunt) return;
+
+      const normalised = normaliseDate(value);
+      const duplicateDate = data.some(item => item.id !== hunt.id && item.date === normalised);
+
+      if (duplicateDate) {
+        alert('Another Bear Hunt already exists for this date.');
+        renderHuntEditor();
+        return;
+      }
+
+      hunt.date = normalised;
+      sortHunts();
+      saveData(false);
+      render();
+    }
+
+    function updateTrapNotes() {
+      const hunt = currentHunt();
+      if (!hunt) return;
+      hunt.notes = document.getElementById('huntNotes').value;
+      saveData(false);
+    }
+
+    function updatePlayer(index, field, value) {
+      const hunt = currentHunt();
+      if (!hunt) return;
+
+      hunt.players[index][field] =
+        (field === 'rank' || field === 'damage')
+          ? (value === '' ? '' : Number(value))
+          : value;
+
+      saveData(false);
+
+      if (field === 'expected' || field === 'joined' || field === 'row') {
+        render();
+      }
+    }
+
+    function addPlayerRow() {
+      const hunt = currentHunt();
+      if (!hunt) {
+        toggleCreatePanel(true);
+        return;
+      }
+
+      hunt.players.push({
+        name: '',
+        row: 'Front Row',
+        expected: true,
+        joined: false,
+        rank: '',
+        damage: 0
+      });
+
+      saveData(false);
+      render();
+    }
+
+    function deletePlayer(index) {
+      const hunt = currentHunt();
+      if (!hunt) return;
+
+      if (!confirm('Delete this player from the selected hunt?')) return;
+      hunt.players.splice(index, 1);
+      saveData(false);
+      render();
+    }
+
+    function deleteCurrentHunt() {
+      if (!data.length) return;
+      if (!confirm('Delete this Bear Hunt only? This will not reset all data.')) return;
+
+      const huntToDelete = currentHunt();
+      data = data.filter(hunt => hunt.id !== huntToDelete.id);
+      selectedHuntId = data[0]?.id || null;
+      saveData(false);
+      render();
+    }
+
+    function confirmCreateHunt() {
+      const selectedDate = document.getElementById('newHuntDate').value;
+
+      if (!selectedDate) {
+        alert('Please choose a hunt date.');
+        return;
+      }
+
+      const normalisedDate = normaliseDate(selectedDate);
+
+      if (data.some(hunt => hunt.date === normalisedDate)) {
+        alert('A Bear Hunt already exists for this date.');
+        return;
+      }
+
+      const copyRoster = document.getElementById('copyRosterCheck').checked;
+      const previous = currentHunt();
+
+      const newHunt = {
+        id: makeId(),
+        name: 'Bear Hunt',
+        date: normalisedDate,
+        notes: '',
+        players: copyRoster && previous ? previous.players.map(player => ({
+          name: player.name,
+          row: player.row,
+          expected: player.expected,
+          joined: false,
+          rank: '',
+          damage: 0
+        })) : []
+      };
+
+      data.push(newHunt);
+      sortHunts();
+      selectedHuntId = newHunt.id;
+      saveData(false);
+      toggleCreatePanel(false);
+      render();
+    }
+
+    function saveData(showAlert = true) {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      if (showAlert) alert('Saved Bear Hunt tracker data.');
+    }
+
+    function exportSelectedHunt() {
+      const hunt = currentHunt();
+
+      if (!hunt) {
+        alert('No hunt selected.');
+        return;
+      }
+
+      downloadJson(`bear-hunt-${hunt.date}.json`, {
+        app: 'Bear Hunt Tracker',
+        version: 13,
+        exportType: 'selected-hunt',
+        exportedAt: new Date().toISOString(),
+        exportedLocalDate: getLocalDateString(),
+        selectedHuntDate: hunt.date,
+        hunts: [hunt]
+      });
+    }
+
+    function exportAllData() {
+      downloadJson(`bear-hunt-all-data-${getLocalDateString()}.json`, {
+        app: 'Bear Hunt Tracker',
+        version: 13,
+        exportType: 'all-hunts',
+        exportedAt: new Date().toISOString(),
+        exportedLocalDate: getLocalDateString(),
+        hunts: data
+      });
+    }
+
+    async function importData(event) {
+      const files = [...event.target.files];
+      if (!files.length) return;
+
+      const result = { files: 0, added: 0, updated: 0, failed: 0, dates: [] };
+      let newestImportedDate = null;
+
+      for (const file of files) {
+        try {
+          const imported = JSON.parse(await file.text());
+          const importedHuntsRaw = extractHuntsFromImport(imported);
+
+          if (!Array.isArray(importedHuntsRaw) || importedHuntsRaw.length === 0) throw new Error('No hunts found');
+
+          const importedHunts = normaliseData(importedHuntsRaw);
+
+          importedHunts.forEach(importedHunt => {
+            const existingIndex = data.findIndex(hunt => hunt.date === importedHunt.date);
+
+            if (existingIndex >= 0) {
+              if (huntScore(importedHunt) >= huntScore(data[existingIndex])) {
+                data[existingIndex] = { ...importedHunt, id: data[existingIndex].id };
+                result.updated += 1;
+              }
+            } else {
+              data.push({ ...importedHunt, id: makeId() });
+              result.added += 1;
+            }
+
+            result.dates.push(formatDate(importedHunt.date));
+            if (!newestImportedDate || importedHunt.date > newestImportedDate) newestImportedDate = importedHunt.date;
+          });
+
+          result.files += 1;
+        } catch {
+          result.failed += 1;
+        }
+      }
+
+      data = normaliseData(data);
+      sortHunts();
+
+      const newestImportedHunt = data.find(hunt => hunt.date === newestImportedDate);
+      selectedHuntId = newestImportedHunt?.id || data[0]?.id || null;
+
+      saveData(false);
+      render();
+      showImportResult(result);
+
+      event.target.value = '';
+    }
+
+    function render() {
+      renderRecentHunts();
+      renderAllHunts();
+      renderTopPlayers();
+      renderWatchList();
+      renderHuntStrength();
+      renderHiddenGems();
+      renderDamageTrend();
+      renderHuntEditor();
+      renderSummary();
+      renderPlayers();
+      renderNotes();
+      renderHistory();
+    }
+  </script>
+</body>
+
+</html>
