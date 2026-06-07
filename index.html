@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bear Hunt Tracker</title>
+  <title>Bear Hunt Tracker - Public Dashboard</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -378,6 +378,23 @@
     }
 
 
+
+    .read-only-banner {
+      background: #eef2ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .read-only-hidden {
+      display: none !important;
+    }
+
+
     .tracker-footer {
       margin-top: 24px;
       padding: 18px;
@@ -435,7 +452,7 @@
           <h1 class="fw-bold mb-1">🐻 Bear Hunt Tracker</h1>
         </div>
 
-        <div class="desktop-actions gap-2">
+        <div class="desktop-actions gap-2 read-only-hidden">
           <label class="btn btn-outline-dark mb-0">
             Import
             <input type="file" accept=".json,application/json" multiple class="d-none js-import-file" />
@@ -445,6 +462,11 @@
         </div>
       </div>
     </header>
+
+
+    <div class="read-only-banner">
+      Read-only public view. Hunt data loads from <strong>data/hunts.json</strong>.
+    </div>
 
     <div id="importResult" class="import-result-box mb-3 d-none"></div>
 
@@ -461,12 +483,12 @@
         <div id="allHuntsList" class="d-grid gap-2"></div>
 
         <div class="mt-3">
-          <button class="btn btn-outline-danger" type="button" data-action="delete-hunt">Delete Selected</button>
+          <button class="btn btn-outline-danger read-only-hidden" type="button" data-action="delete-hunt">Delete Selected</button>
         </div>
       </div>
     </section>
 
-    <section id="createHuntPanel" class="app-card mb-3 panel">
+    <section id="createHuntPanel" class="app-card mb-3 panel read-only-hidden">
       <div class="p-3">
         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
           <div>
@@ -550,7 +572,7 @@
 
           <section class="app-card hidden-card">
             <div class="p-3">
-              <h2 class="section-title">Hidden Gems</h2>
+              <h2 class="section-title">Promotion Candidates</h2>
               <p class="section-subtitle mb-3">Current Second/Third Row players performing near or above Front Row
                 median damage.</p>
               <div id="hiddenGemsList" class="d-grid gap-2"></div>
@@ -579,7 +601,7 @@
 
           <div class="col-12 col-md-4">
             <label class="field-label" for="huntDate">Hunt Date</label>
-            <input class="form-control" type="date" id="huntDate" data-field="hunt-date" />
+            <input class="form-control" type="date" id="huntDate" data-field="hunt-date" disabled />
           </div>
         </div>
 
@@ -631,7 +653,7 @@
             <h2 class="section-title">Attendance & Damage</h2>
             <p class="section-subtitle">Working area for the selected hunt</p>
           </div>
-          <button class="btn btn-dark" data-action="add-player">+ Player</button>
+          <button class="btn btn-dark read-only-hidden" data-action="add-player">+ Player</button>
         </div>
 
         <div class="table-responsive border rounded-4">
@@ -659,7 +681,7 @@
         <h2 class="section-title">Notes</h2>
         <p class="section-subtitle mb-3">Strategy, rally issues, and context for the selected hunt</p>
 
-        <textarea class="form-control" id="huntNotes"
+        <textarea class="form-control" id="huntNotes" readonly
           placeholder="Example: Only 6 rallies started. Tested topper-down method. Damage improved but rallies did not fill evenly."
           data-field="hunt-notes"></textarea>
       </div>
@@ -696,7 +718,7 @@
 
   </main>
 
-  <div class="bottom-actions">
+  <div class="bottom-actions read-only-hidden">
     <div class="row g-2 mb-2">
       <div class="col-12">
         <input class="form-control mobile-import-input js-import-file" type="file" accept=".json,application/json"
@@ -720,17 +742,15 @@
   <script>
     document.addEventListener('DOMContentLoaded', initApp);
 
-    function initApp() {
+    async function initApp() {
       window.today = getLocalDateString();
       window.storageKey = 'bearHuntTracker';
-      window.data = normaliseData(loadJson(storageKey, []));
+      window.data = [];
       window.selectedHuntId = null;
-
-      sortHunts();
-      selectedHuntId = data[0]?.id || null;
+      window.readOnlyMode = true;
 
       bindEvents();
-      render();
+      await loadRemoteData();
     }
 
     function bindEvents() {
@@ -747,6 +767,11 @@
       const index = actionEl.dataset.index;
       const huntId = actionEl.dataset.huntId;
 
+      if (window.readOnlyMode) {
+        const allowedActions = ['show-all-hunts', 'hide-all-hunts', 'select-hunt'];
+        if (!allowedActions.includes(action)) return;
+      }
+
       if (action === 'show-all-hunts') toggleAllHunts(true);
       if (action === 'hide-all-hunts') toggleAllHunts(false);
       if (action === 'show-create') toggleCreatePanel(true);
@@ -761,6 +786,8 @@
     }
 
     function handleChange(event) {
+      if (window.readOnlyMode) return;
+
       if (event.target.classList.contains('js-import-file')) {
         importData(event);
         return;
@@ -774,6 +801,8 @@
     }
 
     function handleInput(event) {
+      if (window.readOnlyMode) return;
+
       const field = event.target.dataset.field;
       const index = event.target.dataset.index;
 
@@ -796,6 +825,38 @@
         return value ? JSON.parse(value) : fallback;
       } catch {
         return fallback;
+      }
+    }
+
+    async function loadRemoteData() {
+      try {
+        const response = await fetch('./data/hunts.json', { cache: 'no-store' });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const imported = await response.json();
+        window.data = normaliseData(imported.hunts || imported || []);
+        sortHunts();
+        selectedHuntId = data[0]?.id || null;
+        render();
+      } catch (error) {
+        console.error('Could not load data/hunts.json:', error);
+        window.data = [];
+        selectedHuntId = null;
+        render();
+
+        const box = document.getElementById('importResult');
+        if (box) {
+          box.classList.remove('d-none');
+          box.innerHTML = `
+            <div class="fw-bold mb-1">Could not load hunt data</div>
+            <div class="small text-secondary">
+              Make sure your GitHub repo contains <code>data/hunts.json</code>.
+            </div>
+          `;
+        }
       }
     }
 
@@ -1537,23 +1598,25 @@
         return;
       }
 
-      hunt.players.forEach((player, index) => {
+      hunt.players.forEach((player) => {
         const tr = document.createElement('tr');
         if (player.row === 'Front Row' && player.expected && !player.joined) tr.classList.add('front-warning');
 
+        const status = player.joined
+          ? '<span class="status-pill joined">Joined</span>'
+          : player.expected
+            ? '<span class="status-pill missed">Missed</span>'
+            : '<span class="status-pill">Not Expected</span>';
+
         tr.innerHTML = `
-          <td><input class="form-control form-control-sm" value="${escapeHtml(player.name)}" data-index="${index}" data-field="name" /></td>
-          <td>
-            <select class="form-select form-select-sm" data-index="${index}" data-field="row">
-              ${['Front Row', 'Second Row', 'Third Row', 'Other'].map(row => `<option ${player.row === row ? 'selected' : ''}>${row}</option>`).join('')}
-            </select>
-          </td>
-          <td class="text-center"><input type="checkbox" ${player.expected ? 'checked' : ''} data-index="${index}" data-field="expected" /></td>
-          <td class="text-center"><input type="checkbox" ${player.joined ? 'checked' : ''} data-index="${index}" data-field="joined" /></td>
-          <td><input class="form-control form-control-sm" type="number" value="${player.rank || ''}" data-index="${index}" data-field="rank" /></td>
-          <td><input class="form-control form-control-sm" type="number" value="${player.damage || 0}" data-index="${index}" data-field="damage" /></td>
-          <td>${player.joined ? '<span class="status-pill joined">Joined</span>' : '<span class="status-pill missed">Missed</span>'}</td>
-          <td><button class="btn btn-sm btn-outline-danger" type="button" data-action="delete-player" data-index="${index}">Delete</button></td>
+          <td><strong>${escapeHtml(player.name)}</strong></td>
+          <td><span class="row-pill">${escapeHtml(player.row)}</span></td>
+          <td class="text-center">${player.expected ? '✅' : '—'}</td>
+          <td class="text-center">${player.joined ? '✅' : '—'}</td>
+          <td>${player.rank || '—'}</td>
+          <td>${Number(player.damage) ? formatNumber(player.damage) : '—'}</td>
+          <td>${status}</td>
+          <td class="text-secondary small">Read only</td>
         `;
 
         table.appendChild(tr);
