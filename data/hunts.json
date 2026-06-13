@@ -2,11 +2,371 @@
   "app": "Bear Hunt Tracker",
   "version": 13,
   "exportType": "all-hunts",
-  "exportedAt": "2026-06-12T16:01:50.553Z",
+  "exportedAt": "2026-06-13T09:26:04.853Z",
   "exportedLocalDate": "2026-06-13",
   "hunts": [
     {
-      "id": "06b51195-9b28-46f4-a53e-1d77ddc36627",
+      "id": "f1d48757-dbde-466d-a3b7-d3e2e9de8d75",
+      "name": "Bear Hunt",
+      "date": "2026-06-13",
+      "notes": "",
+      "players": [
+        {
+          "name": "Bark Obama",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 13,
+          "damage": 2857846104
+        },
+        {
+          "name": "PapaPog13",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 14,
+          "damage": 2422603713
+        },
+        {
+          "name": "Marimobaka",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Master Yoda",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Elizabeth",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 9,
+          "damage": 3454779632
+        },
+        {
+          "name": "PrivateJet",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 10,
+          "damage": 3216089831
+        },
+        {
+          "name": "Loven Death",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ATM",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Gainz",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 15,
+          "damage": 2408044753
+        },
+        {
+          "name": "PippinPizzaBoss",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 19,
+          "damage": 1827442766
+        },
+        {
+          "name": "MyOtterSelf",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Koveth",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Riri",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Kweggy",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ΛЯէاЙжךгკრΞ ๋",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 21,
+          "damage": 1350547767
+        },
+        {
+          "name": "Rogerkuo",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 27,
+          "damage": 124625263
+        },
+        {
+          "name": "Vilar",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "北極來的熊",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 16,
+          "damage": 2265092925
+        },
+        {
+          "name": "The Zulu King",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": 0,
+          "damage": 0
+        },
+        {
+          "name": "Backstreet Zero",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 17,
+          "damage": 2059881326
+        },
+        {
+          "name": "King@",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Sula",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 23,
+          "damage": 1210881793
+        },
+        {
+          "name": "Gofer",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "The Ugly 1",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 22,
+          "damage": 1318918536
+        },
+        {
+          "name": "Goa King",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 25,
+          "damage": 1020815535
+        },
+        {
+          "name": "Leyoow",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "yyy",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 24,
+          "damage": 1161879564
+        },
+        {
+          "name": "Gcap",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 4,
+          "damage": 5028650396
+        },
+        {
+          "name": "ShrimpNgrits",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 1,
+          "damage": 5451126519
+        },
+        {
+          "name": "ZiZou",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 2,
+          "damage": 5245864962
+        },
+        {
+          "name": "Wendel",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 18,
+          "damage": 1912719001
+        },
+        {
+          "name": "mclordface",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 7,
+          "damage": 3659301233
+        },
+        {
+          "name": "Brianna",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 12,
+          "damage": 2956481621
+        },
+        {
+          "name": "Suizas",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 20,
+          "damage": 1588057557
+        },
+        {
+          "name": "Lady Kai",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 3,
+          "damage": 5147732465
+        },
+        {
+          "name": "WarPig",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 5,
+          "damage": 4241621369
+        },
+        {
+          "name": "Cheech",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 6,
+          "damage": 4054633440
+        },
+        {
+          "name": "Virgal",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 7,
+          "damage": 3619704763
+        },
+        {
+          "name": "Willyman",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 11,
+          "damage": 3031934358
+        },
+        {
+          "name": "Sierra Six ",
+          "row": "Other",
+          "expected": false,
+          "joined": true,
+          "rank": 26,
+          "damage": 363138853
+        },
+        {
+          "name": "Clavius",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "JoJo of The305",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "King F",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ygMulia",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        }
+      ]
+    },
+    {
+      "id": "700b53c3-3591-490d-8d9c-b5b3c81f30ba",
       "name": "Bear Hunt",
       "date": "2026-06-11",
       "notes": "",
@@ -33,7 +393,7 @@
           "expected": true,
           "joined": false,
           "rank": "",
-          "damage": ""
+          "damage": 0
         },
         {
           "name": "Master Yoda",
@@ -73,7 +433,7 @@
           "expected": true,
           "joined": false,
           "rank": "",
-          "damage": ""
+          "damage": 0
         },
         {
           "name": "Gainz",
@@ -137,7 +497,7 @@
           "expected": true,
           "joined": false,
           "rank": "",
-          "damage": ""
+          "damage": 0
         },
         {
           "name": "Vilar",
@@ -145,7 +505,7 @@
           "expected": true,
           "joined": false,
           "rank": "",
-          "damage": ""
+          "damage": 0
         },
         {
           "name": "北極來的熊",
@@ -201,7 +561,7 @@
           "expected": true,
           "joined": false,
           "rank": "",
-          "damage": ""
+          "damage": 0
         },
         {
           "name": "Goa King",
@@ -286,7 +646,519 @@
       ]
     },
     {
-      "id": "8b2266b7-bb60-4940-afd3-738ca9963080",
+      "id": "779aa12b-75d4-45a6-a962-1bea93cb788a",
+      "name": "Bear Hunt",
+      "date": "2026-06-09",
+      "notes": "",
+      "players": [
+        {
+          "name": "Bark Obama",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 7,
+          "damage": 1231389487
+        },
+        {
+          "name": "PapaPog13",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 5,
+          "damage": 1305510912
+        },
+        {
+          "name": "Marimobaka",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 11,
+          "damage": 807473770
+        },
+        {
+          "name": "Master Yoda",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Elizabeth",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 2,
+          "damage": 1453412810
+        },
+        {
+          "name": "PrivateJet",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 3,
+          "damage": 1419497242
+        },
+        {
+          "name": "Loven Death",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ATM",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 6,
+          "damage": 1295690218
+        },
+        {
+          "name": "Gainz",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 8,
+          "damage": 1117389358
+        },
+        {
+          "name": "PippinPizzaBoss",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 4,
+          "damage": 1356602688
+        },
+        {
+          "name": "MyOtterSelf",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Koveth",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 12,
+          "damage": 685565047
+        },
+        {
+          "name": "Riri",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "DonTony",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Kweggy",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ΛЯէاЙжךгკრΞ ๋",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 9,
+          "damage": 896883299
+        },
+        {
+          "name": "Rogerkuo",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Vilar",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "北極來的熊",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "The Zulu King",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": 0,
+          "damage": 0
+        },
+        {
+          "name": "Backstreet Zero",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 10,
+          "damage": 877602740
+        },
+        {
+          "name": "King@",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Sula",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 15,
+          "damage": 478254033
+        },
+        {
+          "name": "Mauz Han",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Gofer",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 1,
+          "damage": 1514437060
+        },
+        {
+          "name": "The Ugly 1",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 14,
+          "damage": 482354913
+        },
+        {
+          "name": "Goa King",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Leyoow",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Kirito",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "yyy",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 13,
+          "damage": 651849716
+        },
+        {
+          "name": "Shrimplet",
+          "row": "Other",
+          "expected": false,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        }
+      ]
+    },
+    {
+      "id": "4bce828a-1198-49bc-b170-4e2cc6864c21",
+      "name": "Bear Hunt",
+      "date": "2026-06-07",
+      "notes": "",
+      "players": [
+        {
+          "name": "Bark Obama",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 3,
+          "damage": 1183176189
+        },
+        {
+          "name": "PapaPog13",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 2,
+          "damage": 1257322779
+        },
+        {
+          "name": "Marimobaka",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Master Yoda",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Elizabeth",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 1,
+          "damage": 1331469204
+        },
+        {
+          "name": "PrivateJet",
+          "row": "Front Row",
+          "expected": false,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Loven Death",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ATM",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Gainz",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 5,
+          "damage": 973656762
+        },
+        {
+          "name": "PippinPizzaBoss",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 4,
+          "damage": 1178409840
+        },
+        {
+          "name": "MyOtterSelf",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Koveth",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 9,
+          "damage": 666593059
+        },
+        {
+          "name": "Riri",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "DonTony",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Kweggy",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ΛЯէاЙжךгკრΞ ๋",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Rogerkuo",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 11,
+          "damage": 235422560
+        },
+        {
+          "name": "Vilar",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 8,
+          "damage": 827550103
+        },
+        {
+          "name": "北極來的熊",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 7,
+          "damage": 905640335
+        },
+        {
+          "name": "The Zulu King",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": 0,
+          "damage": 0
+        },
+        {
+          "name": "Backstreet Zero",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 6,
+          "damage": 952573225
+        },
+        {
+          "name": "King@",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Sula",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Mauz Han",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Gofer",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "The Ugly 1",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Goa King",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Leyoow",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 10,
+          "damage": 601759334
+        },
+        {
+          "name": "Kirito",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "yyy",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Shrimplet",
+          "row": "Other",
+          "expected": false,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        }
+      ]
+    },
+    {
+      "id": "d8a2a855-d993-41c2-a71c-d490c83173c6",
       "name": "Bear Hunt",
       "date": "2026-06-05",
       "notes": "",
@@ -574,7 +1446,295 @@
       ]
     },
     {
-      "id": "ea41cbb0-23ed-4305-9937-c359ee52e96b",
+      "id": "58ba85ac-3ac5-4e3d-a881-3cf3ad9a8f6a",
+      "name": "Bear Hunt",
+      "date": "2026-06-03",
+      "notes": "",
+      "players": [
+        {
+          "name": "Bark Obama",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 4,
+          "damage": 1723757499
+        },
+        {
+          "name": "PapaPog13",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 9,
+          "damage": 1449200809
+        },
+        {
+          "name": "Marimobaka",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Master Yoda",
+          "row": "Front Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Elizabeth",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 2,
+          "damage": 1768727594
+        },
+        {
+          "name": "PrivateJet",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 3,
+          "damage": 1767780790
+        },
+        {
+          "name": "Loven Death",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 12,
+          "damage": 1201014208
+        },
+        {
+          "name": "ATM",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 8,
+          "damage": 1465909376
+        },
+        {
+          "name": "Gainz",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 14,
+          "damage": 919259896
+        },
+        {
+          "name": "PippinPizzaBoss",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 6,
+          "damage": 1528528112
+        },
+        {
+          "name": "MyOtterSelf",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 7,
+          "damage": 1496576751
+        },
+        {
+          "name": "Echo!",
+          "row": "Front Row",
+          "expected": true,
+          "joined": true,
+          "rank": 13,
+          "damage": 987727197
+        },
+        {
+          "name": "Koveth",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 18,
+          "damage": 443187934
+        },
+        {
+          "name": "Riri",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "DonTony",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 19,
+          "damage": 332774487
+        },
+        {
+          "name": "Kweggy",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "ΛЯէاЙжךгკრΞ ๋",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Rogerkuo",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Vilar",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "北極來的熊",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 11,
+          "damage": 1222136428
+        },
+        {
+          "name": "The Zulu King",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": 0,
+          "damage": 0
+        },
+        {
+          "name": "Backstreet Zero",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 10,
+          "damage": 1226198836
+        },
+        {
+          "name": "King@",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Sula",
+          "row": "Second Row",
+          "expected": true,
+          "joined": true,
+          "rank": 17,
+          "damage": 585863453
+        },
+        {
+          "name": "Mauz Han",
+          "row": "Second Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Gofer",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 1,
+          "damage": 1875900211
+        },
+        {
+          "name": "The Ugly 1",
+          "row": "Third Row",
+          "expected": false,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Goa King",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Leyoow",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 15,
+          "damage": 911688326
+        },
+        {
+          "name": "Kirito",
+          "row": "Third Row",
+          "expected": true,
+          "joined": true,
+          "rank": 16,
+          "damage": 798198256
+        },
+        {
+          "name": "yyy",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Jobule",
+          "row": "Third Row",
+          "expected": true,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Shrimplet",
+          "row": "Other",
+          "expected": false,
+          "joined": true,
+          "rank": 20,
+          "damage": 45709271
+        },
+        {
+          "name": "Jolteon",
+          "row": "Other",
+          "expected": false,
+          "joined": false,
+          "rank": "",
+          "damage": 0
+        },
+        {
+          "name": "Willyman",
+          "row": "Other",
+          "expected": false,
+          "joined": true,
+          "rank": 5,
+          "damage": 1528668374
+        }
+      ]
+    },
+    {
+      "id": "04f0d166-0a8d-4147-b147-c751ad14a343",
       "name": "Bear Hunt",
       "date": "2026-06-01",
       "notes": "",
@@ -878,7 +2038,7 @@
       ]
     },
     {
-      "id": "d6d9b6f8-0a15-4322-bb31-b0c559540a8f",
+      "id": "cb510fb1-7c24-4fab-aefe-a3a154c6240a",
       "name": "Bear Hunt",
       "date": "2026-05-30",
       "notes": "",
@@ -1174,7 +2334,7 @@
       ]
     },
     {
-      "id": "293ead8d-cb16-4c2b-97dc-8c767cf5b9c2",
+      "id": "7e72f6da-31c8-4603-8452-9e9ff86193de",
       "name": "Bear Hunt",
       "date": "2026-05-28",
       "notes": "",
